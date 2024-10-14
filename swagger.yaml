@@ -101,13 +101,15 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+          
+          
   /user/transactions/{accountID}:
     # récupérer les détails d'une transaction spécifique en fonction de l'ID de la transaction.
       get:
         tags:
           - User Transactions
         summary: User's account 
-        description: API for getting all accounts
+        description: Recuperer tous les comptes
         security: 
           - Bearer: []
         parameters:
@@ -148,13 +150,12 @@ paths:
             schema:
               type: object
               properties:
-                description:
+                category:
                   type: string
-                  description: New transaction description
-                amount:
-                  type: number
-                  format: float
-                  description: New transaction amount
+                  description: New transaction category
+                note:
+                  type: string
+                  description: New transaction note
         produces:
           - application/json
         responses:
@@ -169,6 +170,66 @@ paths:
           '500':
             description: Internal Server Error
   
+  /user/transactions/{accountID}/{transactionID}:
+      get:
+      tags:
+        - User Accounts and Transactions
+      summary: Retrieve a specific transaction
+      description: API pour récupérer une transaction spécifique
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: transactionID
+          description: ID of a transaction
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction retrieved successfully
+          schema:
+            $ref: "#/definitions/TransactionsResponse"
+        "401":
+          description: Unauthorized user
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+
+      put:
+      tags:
+        - User Accounts and Transactions
+      summary: Update transaction's category
+      description: API for updating transaction
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: transactionID
+          description: ID of a transaction
+          required: true
+          type: string
+        - in: body
+          name: category
+          description: Modified transaction's category
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionCategory"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction's category modified successfully
+          schema:
+            $ref: "#/definitions/TransactionCategory"
+        "401":
+          description: Unauthorized user
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -224,21 +285,20 @@ definitions:
     properties:
       userName:
         type: string
-  # Transaction:
-  #   type: object
-  #   properties:
-  #     transaction_id:
-  #       type: string
-  #       description: ID unique de la transaction
-  #     date:
-  #       type: string
-  #       format: date
-  #       description: Date de la transaction
-  #     amount:
-  #       type: number
-  #       format: float
-  #       description: Montant de la transaction
-  #     description:
-  #       type: string
-  #       description: Description de la transaction
-
+  Transaction:
+    type: object
+    properties:
+      transaction_id:
+          type: string
+          description: ID unique de la transaction
+      date:
+          type: string
+          format: date
+          description: Date de la transaction
+      amount:
+         type: number
+         format: float
+         description: Montant de la transaction
+      description:
+        type: string
+        description: Description de la transaction
