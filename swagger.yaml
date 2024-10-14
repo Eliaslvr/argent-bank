@@ -101,8 +101,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-          
-          
+                   
   /user/transactions/{accountID}:
     # récupérer les détails d'une transaction spécifique en fonction de l'ID de la transaction.
       get:
@@ -170,66 +169,67 @@ paths:
           '500':
             description: Internal Server Error
   
-  /user/transactions/{accountID}/{transactionID}:
+  /user/transactions/account/{transactionID}:
       get:
-      tags:
-        - User Accounts and Transactions
-      summary: Retrieve a specific transaction
-      description: API pour récupérer une transaction spécifique
-      security:
-        - Bearer: []
-      parameters:
-        - in: path
-          name: transactionID
-          description: ID of a transaction
-          required: true
-          type: string
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: Transaction retrieved successfully
-          schema:
-            $ref: "#/definitions/TransactionsResponse"
-        "401":
-          description: Unauthorized user
-        "404":
-          description: Transaction not found
-        "500":
-          description: Internal Server Error
+        tags:
+          - User Accounts and Transactions
+        summary: Retrieve a specific transaction
+        description: API pour récupérer une transaction spécifique
+        security:
+          - Bearer: []
+        parameters:
+          - in: path
+            name: transactionID
+            description: ID of a transaction
+            required: true
+            type: string
+        produces:
+          - application/json
+        responses:
+          "200":
+            description: Transaction retrieved successfully
+            schema:
+              $ref: "#/definitions/Transaction"
+          "401":
+            description: Unauthorized user
+          "404":
+            description: Transaction not found
+          "500":
+            description: Internal Server Error
 
       put:
-      tags:
-        - User Accounts and Transactions
-      summary: Update transaction's category
-      description: API for updating transaction
-      security:
-        - Bearer: []
-      parameters:
-        - in: path
-          name: transactionID
-          description: ID of a transaction
-          required: true
-          type: string
-        - in: body
-          name: category
-          description: Modified transaction's category
-          required: true
-          schema:
-            $ref: "#/definitions/TransactionCategory"
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: Transaction's category modified successfully
-          schema:
-            $ref: "#/definitions/TransactionCategory"
-        "401":
-          description: Unauthorized user
-        "404":
-          description: Transaction not found
-        "500":
-          description: Internal Server Error
+        tags:
+          - User Accounts and Transactions
+        summary: Update transaction's category
+        description: API for updating transaction
+        security:
+          - Bearer: []
+        parameters:
+          - in: path
+            name: transactionID
+            required: true
+            description: ID of a transaction
+            type: string
+          - in: body
+            name: body
+            description: Modified transaction's category
+            required: true
+            schema:
+              $ref: "#/definitions/Transaction"
+        produces:
+          - application/json
+        responses:
+          "200":
+            description: Transaction's category modified successfully
+            schema:
+              $ref: "#/definitions/Transaction"
+          "401":
+            description: Unauthorized user
+          "404":
+            description: Transaction not found
+          "500":
+            description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
