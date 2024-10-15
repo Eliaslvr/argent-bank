@@ -3,18 +3,19 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess, loginFailure } from '../../actions/authActions';
-// import { loginUser } from '../../counter/counterSlice'
 
 import './MainSignIn.css'
 
 export const MainSignIn = () => {
 
+	// utilisé pour stocker et mettre à jour les valeurs
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 	const [signInClicked, setSignInClicked] = useState(false);
 
     const navigate = useNavigate();
+	// useDispatch () hook qui permet d'envoyer des actions à un store Redux.
 	const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
@@ -23,16 +24,18 @@ export const MainSignIn = () => {
 
 		try {
 			const response = await fetch("http://localhost:3001/api/v1/user/login", {
+				// pour créé
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
 				},
+				// convertit un objet JavaScript en une chaîne JSON.
 				body: JSON.stringify({ email, password })
 			});
 			if (response.ok) {
 				const data = await response.json();
-
 				const token = data.body.token;
+				// l'action loginSuccess est envoyée via dispatch
 				dispatch(loginSuccess(token));
 				localStorage.setItem("token", token);
 				console.log("Connexion réussie");

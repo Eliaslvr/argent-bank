@@ -9,10 +9,13 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
+      // Lorsque l'action LOGIN_REQUEST est dispatchée 
       case LOGIN_REQUEST:
       return {
         ...state,
+        // 'loading' est défini sur true, indiquant que le processus de connexion est en cours.
         loading: true,
+        // L'erreur est réinitialisée à null pour effacer les anciennes erreurs.
         error: null,
       };
       case LOGIN_SUCCESS:

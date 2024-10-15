@@ -1,8 +1,11 @@
+// useState permet de gérer l'état local dans le composant
 import React, { useState, useEffect } from "react";
+// useSelector pour accéder à l'etat global du token
 import { useSelector, useDispatch } from "react-redux";
 import { userProfile, updateUserName } from "../../actions/userActions";
 
-import './MainUser.css'
+import './MainUser.css';
+import Account from '../Account/Account'
 
 export const MainUser = () => {
   const dispatch = useDispatch();
@@ -12,7 +15,9 @@ export const MainUser = () => {
   const [display, setDisplay] = useState(true);
   const [userName, setUserName] = useState("");
 
+  // déclenchée lors de la soumission du formulaire.
   const fetchUserData = async () => {
+    // try est utilisé pour encapsuler le code qui pourrait générer une erreur 
     try {
       const response = await fetch("http://localhost:3001/api/v1/user/profile", {
         method: "PUT",
@@ -24,6 +29,7 @@ export const MainUser = () => {
       });
       const user = (await response.json()).body;
       const updatedUserName = user.userName;
+      // envoie une action à Redux pour mettre à jour le nom d'utilisateur dans l'état de l'application.
       dispatch(updateUserName(updatedUserName));
       setDisplay(true); // Rétablir l'affichage à true après la sauvegarde
 
@@ -33,6 +39,7 @@ export const MainUser = () => {
     }
   };
 
+  // useEffect est utilisé pour déclencher des effets secondaires
   useEffect(() => {
     // Récupérer les données de l'utilisateur au montage du composant
     const getUserData = async () => {
@@ -52,6 +59,7 @@ export const MainUser = () => {
     };
 
     getUserData();
+    // l'effet sera réexécuté chaque fois que dispatch ou token change.
   }, [dispatch, token]);
 
   return (
@@ -99,40 +107,10 @@ export const MainUser = () => {
               </form>
             </div>
           )}
-                      </div>
-            <h2 className="sr-only">Accounts</h2>
-            <section className="account">
-            <div className="account-content-wrapper">
-              <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-              <p className="account-amount">$2,082.79</p>
-                <p className="account-amount-description">Available Balance</p>
-              </div>
-              <div className="account-content-wrapper cta">
-                <button className="transaction-button">View transactions</button>
-              </div>
-            </section>
-            <section className="account">
-              <div className="account-content-wrapper">
-                <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-                <p className="account-amount">$10,928.42</p>
-                <p className="account-amount-description">Available Balance</p>
-            </div>
-              <div className="account-content-wrapper cta">
-                <button className="transaction-button">View transactions</button>
-              </div>
-            </section>
-            <section className="account">
-              <div className="account-content-wrapper">
-                <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-                <p className="account-amount">$184.30</p>
-              <p className="account-amount-description">Current Balance</p>
-              </div>
-              <div className="account-content-wrapper cta">
-                <button className="transaction-button">View transactions</button>
-              </div>
-            </section>
-          </main>
         </div>
+            <Account />
+        </main>
+      </div>
   );
 }
 

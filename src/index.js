@@ -10,6 +10,7 @@ const rootElement = document.getElementById('root')
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
+  // Le composant <Provider> permet de rendre le store accessible à tous les composants React de l'application.
   <Provider store={store}>
     <App />
   </Provider>

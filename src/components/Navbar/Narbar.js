@@ -8,10 +8,6 @@ import './Navbar.css'
 function Narbar() {
     const isConnected = useSelector((state) => state.auth.user);
     const userName = useSelector((state) => state.user.userData.userName);
-    //const lastName = useSelector((state) => state.user.userData.lastName)
-    const aa = useSelector((state) => state);
-    console.log(aa);
-    
 
     console.log('username ==> navbar', userName);
     
@@ -26,25 +22,25 @@ function Narbar() {
 
     return (
 			<nav className="main-nav">
-				<a href="/" className="main-nav-logo" >
+				<Link to="/" className="main-nav-logo" >
 					<img className="main-nav-logo-image" src={Image} alt="Argent Bank Logo" />
                     <h1 className="sr-only">Argent Bank</h1>
-				</a>
+				</Link>
 				{isConnected ? (
 					<div>
                         <Link to='/profile' className="main-nav-item">
                             {userName}
                         </Link>
-                        <a href='/' className="main-nav-item" onClick={logoutHandle}>
+                        <Link to='/' className="main-nav-item" onClick={logoutHandle}>
                             Sign Out
-                        </a>
+                        </Link>
                     </div>
 				) : (
 					<div>
-                        <a className="main-nav-item" href="./sign_in">
+                        <Link to="./sign_in" className="main-nav-item">
                             <i className="fa fa-user-circle"></i>
                             Sign In
-                        </a>
+                        </Link>
                     </div>
 				)}
 			</nav>
