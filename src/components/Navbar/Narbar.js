@@ -16,7 +16,6 @@ function Narbar() {
 
     const logoutHandle = () => {
         dispatch(logout());
-        localStorage.clear();
         navigate('/');
     }
 

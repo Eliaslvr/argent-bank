@@ -37,7 +37,6 @@ export const MainSignIn = () => {
 				const token = data.body.token;
 				// l'action loginSuccess est envoyée via dispatch
 				dispatch(loginSuccess(token));
-				localStorage.setItem("token", token);
 				console.log("Connexion réussie");
 				navigate("/profile");
 			} else {

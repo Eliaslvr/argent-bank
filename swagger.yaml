@@ -102,13 +102,13 @@ paths:
         '500':
           description: Internal Server Error
                    
-  /user/transactions/{accountID}:
+  /transactions/account/{accountID}:
     # récupérer les détails d'une transaction spécifique en fonction de l'ID de la transaction.
       get:
         tags:
           - User Transactions
-        summary: User's account 
-        description: Recuperer tous les comptes
+        summary: Account's account 
+        description:  API for retrieving list of transactions associated with a chosen account
         security: 
           - Bearer: []
         parameters:
@@ -130,51 +130,13 @@ paths:
             description: Transactions not found
           '500':
             description: Internal Server Error
-    # permet de mettre à jour les informations d'une transaction existante.
-      put:
-        tags:
-          - Transaction Module
-        summary: Update transaction information
-        description: API to modify certain information of a transaction
-        parameters:
-          - in: path
-            name: accountID
-            required: true
-            type: string
-            description: Unique transaction ID
-          - in: body
-            name: body
-            required: true
-            description: New transaction information
-            schema:
-              type: object
-              properties:
-                category:
-                  type: string
-                  description: New transaction category
-                note:
-                  type: string
-                  description: New transaction note
-        produces:
-          - application/json
-        responses:
-          '200':
-            description: Transaction updated successfully
-            schema:
-              $ref: '#/definitions/ApiResponse'
-          '400':
-            description: Invalid query parameters or invalid data
-          '404':
-            description: Transaction not found
-          '500':
-            description: Internal Server Error
   
-  /user/transactions/account/{transactionID}:
+  /transactions/{transactionID}:
       get:
         tags:
-          - User Accounts and Transactions
+          - User Transaction
         summary: Retrieve a specific transaction
-        description: API pour récupérer une transaction spécifique
+        description: API for getting a specific transaction
         security:
           - Bearer: []
         parameters:
@@ -199,7 +161,7 @@ paths:
 
       put:
         tags:
-          - User Accounts and Transactions
+          - User Transaction
         summary: Update transaction's category
         description: API for updating transaction
         security:
@@ -212,10 +174,17 @@ paths:
             type: string
           - in: body
             name: body
-            description: Modified transaction's category
             required: true
+            description: New transaction information
             schema:
-              $ref: "#/definitions/Transaction"
+              type: object
+              properties:
+                category:
+                  type: string
+                  description: New transaction category
+                note:
+                  type: string
+                  description: New transaction note
         produces:
           - application/json
         responses:
