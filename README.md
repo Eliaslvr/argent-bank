@@ -53,47 +53,60 @@ BanqueApp est une application bancaire full-stack. Elle permet aux utilisateurs 
 2️⃣ Cloner le dépôt GitHub :  
 ```bash
 git clone https://github.com/Eliaslvr/argent-bank.git
+```
 
 3️⃣ Installer et lancer le backend :
 
 Aller dans le dossier service :
 
+```bash
 cd service
-
+```
 Vérifier que Node.js et MongoDB sont installés :
 
+```bash
 node -v
 mongo --version
-
+```
 
 Installer les dépendances :
 
+```bash
 npm install
-
+```
 
 Lancer le serveur en mode développement :
 
+```bash
 npm run dev:server
+```
 
 
 Remplir la base de données avec les données test :
 
+```bash
 npm run populate-db
+```
 
 
 4️⃣ Installer et lancer le frontend :
 
 Aller dans le dossier web-client :
 
+```bash
 cd web-client
+```
 
 
 Installer les dépendances :
 
+```bash
 npm install
-
+```
 
 Lancer le frontend :
 
+```bash
 npm start
+```
 
